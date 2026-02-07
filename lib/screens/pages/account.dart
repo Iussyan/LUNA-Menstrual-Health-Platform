@@ -20,8 +20,8 @@ class Account extends StatelessWidget {
             Center(
               child: CircleAvatar(
                 radius: 50,
-                backgroundColor: Colors.pinkAccent.withOpacity(
-                  0.1,
+                backgroundColor: Colors.pinkAccent.withValues(
+                  alpha: 0.1,
                 ), // Soft background for the fallback
                 backgroundImage: avatarUrl != null
                     ? NetworkImage(avatarUrl)

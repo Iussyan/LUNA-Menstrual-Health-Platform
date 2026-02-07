@@ -17,18 +17,18 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
           ],
         ),
-        margin: const EdgeInsets.all(16.0),
         child: TableCalendar(
           firstDay: DateTime.utc(2020, 1, 1),
           lastDay: DateTime.utc(2030, 12, 31),
@@ -51,7 +51,7 @@ class _CalendarState extends State<Calendar> {
           // Customizing the Look
           calendarStyle: CalendarStyle(
             todayDecoration: BoxDecoration(
-              color: Theme.of(context).primaryColor.withOpacity(0.5),
+              color: Theme.of(context).primaryColor.withValues(alpha: 0.5),
               shape: BoxShape.circle,
             ),
             selectedDecoration: BoxDecoration(

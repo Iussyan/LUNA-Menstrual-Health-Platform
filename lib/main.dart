@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:luna_prototype/providers/loader_provider.dart';
+import 'package:luna_prototype/screens/pages/loader.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_wrapper.dart';
-import 'screens/home/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,9 +49,31 @@ class Luna extends StatefulWidget {
 class _LunaState extends State<Luna> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthWrapper(),
+      // The builder is the secret sauce for "Universal" overlays
+      builder: (context, child) {
+        return Stack(
+          children: [
+            if (child != null) child,
+            ValueListenableBuilder<LoadingState>(
+              valueListenable: LoadingService.state,
+              builder: (context, loading, _) {
+                if (!loading.show) return const SizedBox.shrink();
+
+                return Material( // Ensures text styles work properly
+                  type: MaterialType.transparency,
+                  child: AbsorbPointer(
+                    absorbing: true, // Prevents clicking the UI underneath
+                    child: LoadingIndicatorFb1(message: loading.message),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      },
+      home: const AuthWrapper(),
     );
   }
 }

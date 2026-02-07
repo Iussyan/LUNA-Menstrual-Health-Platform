@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:luna_prototype/providers/loader_provider.dart';
 import 'package:luna_prototype/screens/home/home_screen.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'auth_page.dart'; // Your login page
@@ -19,12 +20,12 @@ class AuthWrapper extends StatelessWidget {
 
         // 2. Check if we have a valid session
         final session = snapshot.data?.session;
+        
+        LoadingService.show("Please wait...");
 
         if (session != null) {
-          // User is logged in! Show the main app.
           return const HomePage(); 
         } else {
-          // No session found. Show the login page.
           return const AuthPage();
         }
       },
